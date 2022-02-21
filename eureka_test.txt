@@ -1,3 +1,18 @@
+For applications:
+ Spring web
+ Eureka client
+ spring Actuator(optional)
+For discovery:
+ Spring web
+ Spring Actuator
+ Eureka server
+For gateway:
+ gateway
+ Spring web
+ spring Actuator
+ Eureka client
+ 
+
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 
