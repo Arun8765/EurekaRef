@@ -1,0 +1,52 @@
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+@EnableEurekaClient
+
+
+import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
+import java.util.List;
+@RequestMapping("/consumers")
+@RestController
+@GetMapping
+@PathVariable
+
+server.port=3001
+spring.application.name=consumer
+eureka.client.serviceUrl.defaultZone=http://localhost:3000/eureka/
+
+
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+@EnableEurekaServer
+
+spring.application.name=discovery
+server.port=3000
+eureka.client.registerWithEureka=false
+eureka.client.fetchRegistry=false
+eureka.instance.hostname=localhost
+eureka.client.serviceUrl.defaultZone=http://${eureka.instance.hostname}:${server.port}/eureka/
+
+
+server:
+  port: 3081
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+      - id: consumerModule
+        uri: http://localhost:3001/
+        predicates:
+        - Path=/consumers/**
+      - id: producerModule
+        uri: http://localhost:3002/
+        predicates:
+        - Path=/producers/**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:3000/eureka
+  registerWithEureka:
+  - true
+  fetchRegistry:
+  - true
