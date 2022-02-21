@@ -65,3 +65,21 @@ eureka:
   - true
   fetchRegistry:
   - true
+
+
+    private List<Consumer> consumers= Arrays.asList(
+        new Consumer(1,"Amanda"),
+        new Consumer(2,"Mathews"),
+        new Consumer(3,"Timothy"),
+        new Consumer(4,"Andrews")
+    );
+
+    @GetMapping("/{id}")
+    public Consumer getConsumerByid(@PathVariable int id){
+        return consumers.stream()
+                        .filter(consumers -> consumers.getId()==id)
+                        .findFirst()
+                        .orElseThrow(IllegalArgumentException::new);
+    }
+
+
